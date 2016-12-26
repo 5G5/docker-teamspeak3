@@ -1,5 +1,3 @@
-[![](https://images.microbadger.com/badges/image/bastiofberlin/docker-teamspeak3.svg)](https://microbadger.com/images/bastiofberlin/docker-teamspeak3 "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/bastiofberlin/docker-teamspeak3.svg)](https://microbadger.com/images/bastiofberlin/docker-teamspeak3 "Get your own version badge on microbadger.com")
-
 ## docker-teamspeak3
 
 Alpine+glibc with TS3 Server.
@@ -15,46 +13,6 @@ Alpine+glibc with TS3 Server.
   * licence (Maybe; Dont have one)
   * ts3server.ini (Not tested)
 
-<<<<<<< HEAD
-#### Usage
-  * Infos
-  
-	The script does look for an sqlite db in the linked host-folder. 
-	If its found, a symlink is created to the ts3-folder inside the container. 
-	This means the server should use your old ts3 db if present. 
-	If not present it will create a new one, right now this will NOT be created under the linked host-folder!
-	The problem here is i cant tell the TS3 server to create the db in specific folder.
-	Creating a empty file and then linking this did not work either since TS3 is then complaining its no sqlite db.
-	
-	Script will also look for ts3server.ini in linked host-folder. This file will also be created if its not 
-	found since TS3-server has a paramater for that. If you use your own ini-file you may want to link logs and other data to /teamspeak3.
-	This way you can mount the directory and backup/persist the data even when upgrading.
-	
-	The files-directory is also currently not persisted in the linked host-folder.
-
-  * Build container (optional)
-  
-	Just in case you dont wanna use the index.
-	
-    `docker build https://github.com/luzifer-docker/docker-teamspeak3.git` 
-  
-  
-  * Create container
-    
-    This creates and starts a docker container in the 
-    background (-d) with 
-    direct mapping of the TS3 port (-p 9987:9987/udp)
-    and sets the name to TS3.
-    {FOLDER} is an absolute path on the host to be mapped by the containers /teamspeak3 folder.
-    Injected files are used from this location, see Summary above.
-
-    `docker run --name TS3 -d -p 9987:9987/udp -v {FOLDER}:/teamspeak3 luzifer/teamspeak3` 
-    
-  * Admin Secret
-  
-    After starting the container you probably want to get the Admin secret with:
-    `docker logs TS3` 
-=======
 ### Update Notice
 I made bigger updates to the Dockerfile to simplify and streamline the whole process. Please read the following infos carefully!
 The old image used root to run the ts3-server and there all created files had root-permission. The new image uses a dedicated user (ts3) with a default UID of 1000 which can be overridden with an ENV-variable (TS3_UID). So in case you want to use old data you most probably need to chown the old files to the new user/uid.
@@ -100,7 +58,6 @@ This is still WIP.
 ### Admin Secret
 After starting the container you probably want to get the Admin secret with:
 `sudo docker logs ts3` 
->>>>>>> f41154ea059acbc6433c0395b1c286b4acedb5aa
     
 ### Upgrading
 Just stop and remove the old container, then start again at "Creating container". You may have to pull the image again if its not updating.
